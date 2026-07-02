@@ -1,46 +1,41 @@
-/*
-  Editable global theme layer.
-
-  Safe for UI editors / AI tools:
-  - Full site background
-  - Global text color
-  - Editable-only typography
-  - Selection color
-  - Scrollbar feel
-  - Article body typography accents
-
-  Do not add data fetching, scripts, or route logic here.
-*/
-
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
-
-/* Per-task display + body typefaces (consumed via task-themes.ts). */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;600;700&family=Sora:wght@400;500;600;700;800&family=Syne:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
 
 body {
-  background-color: var(--slot4-page-bg) !important;
-  color: var(--slot4-page-text) !important;
-  background-image: var(--slot4-body-gradient) !important;
+  background-color: #081a2b !important;
+  color: #f8efe1 !important;
+  background-image:
+    radial-gradient(circle at top, rgba(100, 13, 95, 0.26), transparent 32%),
+    radial-gradient(circle at 20% 15%, rgba(217, 22, 86, 0.12), transparent 24%),
+    linear-gradient(180deg, #0f2940 0%, #081a2b 26%, #081a2b 100%) !important;
 }
 
 .editable-site-root {
-  /* Yelp-style clean sans, used for both display and body. */
-  --editable-font-display: 'Inter', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
-  --editable-font-body: 'Inter', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
-  /* Premium easing curve used across every hover + transition. */
+  --editable-font-display: 'Cormorant Garamond', 'Times New Roman', serif;
+  --editable-font-body: 'Manrope', 'Segoe UI', sans-serif;
   --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  --slot4-page-bg: #081a2b;
+  --slot4-page-text: #f8efe1;
+  --slot4-muted-text: rgba(248, 239, 225, 0.72);
+  --slot4-accent: #ffb200;
+  --slot4-accent-fill: #eb5b00;
+  --slot4-accent-2: #d91656;
+  --slot4-accent-3: #640d5f;
+  --slot4-surface-bg: rgba(8, 26, 43, 0.72);
+  --slot4-surface-strong: rgba(9, 22, 36, 0.92);
+  --slot4-surface-soft: rgba(255, 255, 255, 0.05);
+  --slot4-border: rgba(255, 255, 255, 0.1);
+  --slot4-media-bg: rgba(255, 255, 255, 0.06);
+  --slot4-warm: linear-gradient(180deg, rgba(255, 178, 0, 0.08), rgba(235, 91, 0, 0.04));
+  --editable-nav-bg: rgba(8, 26, 43, 0.92);
+  --editable-nav-text: #f8efe1;
+  --editable-border: rgba(255, 255, 255, 0.1);
+  --editable-cta-bg: linear-gradient(135deg, #ffb200, #eb5b00);
+  --editable-cta-text: #160e07;
+  --editable-footer-bg: #06131f;
+  --editable-footer-text: #f8efe1;
   font-family: var(--editable-font-body);
 }
 
-/*
-  Site-wide premium motion.
-
-  1. Unify the easing of every existing transition/hover to one refined curve.
-  2. Add a smooth "post open" entry animation that replays on each navigation
-     (driven by EditablePageMotion remounting the content per route).
-  Durations stay defined per-component via Tailwind utilities.
-*/
 .editable-site-root *,
 .editable-site-root *::before,
 .editable-site-root *::after {
@@ -50,7 +45,7 @@ body {
 @keyframes editable-enter {
   from {
     opacity: 0;
-    transform: translate3d(0, 22px, 0);
+    transform: translate3d(0, 18px, 0);
   }
   to {
     opacity: 1;
@@ -58,10 +53,8 @@ body {
   }
 }
 
-/* The content region rises + fades on open; `backwards` clears the transform
-   afterwards so sticky sidebars keep working. */
 .editable-enter > * {
-  animation: editable-enter 0.6s var(--ease-premium) backwards;
+  animation: editable-enter 0.55s var(--ease-premium) backwards;
   will-change: transform, opacity;
 }
 
@@ -69,6 +62,7 @@ body {
   .editable-enter > * {
     animation: none;
   }
+
   .editable-site-root *,
   .editable-site-root *::before,
   .editable-site-root *::after {
@@ -83,7 +77,7 @@ body {
 .editable-site-root h4,
 .editable-display {
   font-family: var(--editable-font-display);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
 .editable-site-root p,
@@ -92,32 +86,60 @@ body {
 .editable-site-root button,
 .editable-site-root textarea,
 .editable-site-root label,
-.editable-site-root nav {
+.editable-site-root nav,
+.editable-site-root span,
+.editable-site-root a {
   font-family: var(--editable-font-body);
 }
 
-::selection {
-  background: color-mix(in oklab, var(--slot4-accent-fill) 28%, transparent);
-  color: var(--slot4-page-text);
+.editable-glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
-::-webkit-scrollbar-track {
-  background: color-mix(in oklab, var(--slot4-page-bg) 88%, black);
+.editable-card-shadow {
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.26);
 }
 
-::-webkit-scrollbar-thumb {
-  background: color-mix(in oklab, var(--slot4-accent) 45%, transparent);
-  border-radius: 999px;
+.editable-mesh {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 22px 22px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: color-mix(in oklab, var(--slot4-accent) 68%, transparent);
-}
-
-.article-content h2 {
+.article-content h2,
+.article-content h3 {
+  margin-top: 2rem;
   color: var(--slot4-accent);
+}
+
+.article-content p,
+.article-content li {
+  color: var(--tk-text, var(--slot4-page-text));
 }
 
 .article-content a {
   color: var(--slot4-accent-fill);
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+}
+
+::selection {
+  background: rgba(255, 178, 0, 0.35);
+  color: #120d08;
+}
+
+::-webkit-scrollbar {
+  width: 11px;
+}
+
+::-webkit-scrollbar-track {
+  background: #07131f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ffb200, #d91656);
+  border-radius: 999px;
 }
